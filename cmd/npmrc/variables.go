@@ -3,7 +3,10 @@ package main
 import homedir "github.com/mitchellh/go-homedir"
 
 // NpmrcFile base name
-const NpmrcFile = ".npmrc"
+const (
+	Version   = "0.1.0"
+	NpmrcFile = ".npmrc"
+)
 
 var (
 	// Home user home directory

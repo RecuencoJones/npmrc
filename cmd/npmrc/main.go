@@ -66,6 +66,8 @@ func main() {
 		fallthrough
 	case "h":
 		Help()
+	case "version":
+		fmt.Println(Version)
 	default:
 		Help()
 		os.Exit(1)
@@ -144,5 +146,6 @@ list, ls    List available profiles
 edit, ed    Create or update profiles
 copy, cp    Copy profiles
 remove, rm  Remove a profile
-help, h     Display this message`)
+help, h     Display this message
+version     Display version`)
 }

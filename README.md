@@ -16,6 +16,7 @@ edit, ed    Create or update profiles
 copy, cp    Copy profiles
 remove, rm  Remove a profile
 help, h     Display this message
+version     Display version
 ```
 
 ## Configuration
