@@ -1,3 +1,5 @@
+[![](https://travis-ci.com/RecuencoJones/npmrc.svg?branch=develop)](https://travis-ci.com/RecuencoJones/npmrc)
+
 # npmrc
 
 A CLI to manage multiple npmrc files
