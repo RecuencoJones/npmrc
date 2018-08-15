@@ -2,6 +2,23 @@
 
 A CLI to manage multiple npmrc files
 
+## Installation from source
+
+```
+git clone https://github.com/RecuencoJones/npmrc
+cd npmrc
+go get -t ./...
+go install ./...
+```
+
+## Installation from releases
+
+- Download the binary for your distribution
+- Rename it to `npmrc`
+- Make it available in your path
+
+Happy `.npmrc` switching!
+
 ## Usage
 
 ```
