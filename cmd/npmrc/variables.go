@@ -2,7 +2,8 @@ package main
 
 import homedir "github.com/mitchellh/go-homedir"
 
-const NPMRC_FILE = ".npmrc"
+// NpmrcFile base name
+const NpmrcFile = ".npmrc"
 
 var (
 	// Home user home directory
@@ -12,5 +13,8 @@ var (
 	Dir = GetEnv("NPMRC_DIR", Home)
 
 	// Editor to use for create/update profiles
-	Editor = GetEnv("EDITOR", "vim")
+	Editor = GetEnv("EDITOR", "vi")
+
+	// Viewer to use for displaying profiles
+	Viewer = GetEnv("VIEWER", "cat")
 )

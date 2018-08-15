@@ -1,0 +1,21 @@
+dist: trusty
+language: go
+go:
+- "1.10"
+
+install:
+- go get github.com/mitchellh/gox
+- go get -t ./...
+
+script:
+- go install ./...
+- gox -output="bin/{{.OS}}-{{.Arch}}/{{.Dir}}" ./...
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file_glob: true
+  file: bin/**/*
+  skip_cleanup: true
+  on:
+    tags: true

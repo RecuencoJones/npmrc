@@ -2,54 +2,71 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"log"
 	"os"
 	"path"
 )
 
+// UseOptions containing flag values
+type UseOptions struct {
+	help bool
+}
+
+// UseHandler used to parse args and options
+func UseHandler(args []string, options UseOptions) {
+	if options.help {
+		UseHelp()
+		os.Exit(0)
+	}
+
+	if len(args) < 1 {
+		fmt.Println("Error: You must specify a profile!")
+		UseHelp()
+		os.Exit(1)
+	}
+
+	profile := args[0]
+
+	err := Use(profile)
+
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
+}
+
 // Use given profile
-func Use(profile string) {
-	// check profile is valid
+func Use(profile string) error {
 	if !ProfileExists(profile) {
 		fmt.Println("Profile \"" + profile + "\" does not exist")
 		os.Exit(1)
 	}
 
 	// copy from $npmrc_dir/.npmrc.$profile to .npmrc
-	source := path.Join(Dir, NPMRC_FILE+"."+profile)
-	dest := path.Join(Home, NPMRC_FILE)
+	source := path.Join(Dir, NpmrcFile+"."+profile)
+	dest := path.Join(Home, NpmrcFile)
 
-	err := cp(source, dest)
+	err := CP(source, dest)
 
 	if err != nil {
-		log.Fatal(err)
-		os.Exit(1)
+		return err
 	}
 
-	// set .npmrc_current to $profile
-	// TODO
+	// TODO set .npmrc_current to $profile
 
 	fmt.Println("Now using profile: " + profile)
-}
-
-func cp(sourcefile, destfile string) error {
-	source, err := os.Open(sourcefile)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer source.Close()
-
-	dest, err := os.OpenFile(destfile, os.O_RDWR|os.O_CREATE, 0666)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer dest.Close()
-
-	_, err = io.Copy(dest, source)
-	if err != nil {
-		log.Fatal(err)
-	}
 
 	return err
+}
+
+// UseHelp display usage of Use command
+func UseHelp() {
+	fmt.Println(`
+Usage: npmrc use [flags] <profile>
+
+Alias: u
+
+Available flags:
+
+h          Display this message`)
 }

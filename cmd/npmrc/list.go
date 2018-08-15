@@ -2,62 +2,52 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"log"
 	"os"
-	"path"
 	"strings"
 )
 
+// ListOptions containing flag values
+type ListOptions struct {
+	asList bool
+	help   bool
+}
+
+// ListHandler used to parse args and options
+func ListHandler(options ListOptions) {
+	if options.help {
+		ListHelp()
+		os.Exit(0)
+	}
+
+	List(options.asList)
+}
+
+// List available profiles
 func List(asList bool) {
-	profileNames := getProfiles()
+	profileNames := GetProfiles()
 
-	if asList {
-		for _, profileName := range profileNames {
-			fmt.Println(profileName)
-		}
+	if len(profileNames) == 0 {
+		fmt.Println("No profiles available")
 	} else {
-		fmt.Println(strings.Join(profileNames, ", "))
-	}
-}
-
-func getProfiles() []string {
-	files := ls(path.Join(Dir))
-
-	profiles := filter(files, func(file os.FileInfo) bool {
-		return strings.HasPrefix(file.Name(), ".npmrc.")
-	})
-
-	profileNames := collect(profiles, func(file os.FileInfo) string {
-		return strings.Replace(file.Name(), ".npmrc.", "", 1)
-	})
-
-	return profileNames
-}
-
-func ls(dir string) []os.FileInfo {
-	files, err := ioutil.ReadDir(dir)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return files
-}
-
-func filter(vs []os.FileInfo, f func(os.FileInfo) bool) []os.FileInfo {
-	vsf := make([]os.FileInfo, 0)
-	for _, v := range vs {
-		if f(v) {
-			vsf = append(vsf, v)
+		if asList {
+			for _, profileName := range profileNames {
+				fmt.Println(profileName)
+			}
+		} else {
+			fmt.Println(strings.Join(profileNames, " "))
 		}
 	}
-	return vsf
 }
 
-func collect(vs []os.FileInfo, f func(os.FileInfo) string) []string {
-	vsm := make([]string, len(vs))
-	for i, v := range vs {
-		vsm[i] = f(v)
-	}
-	return vsm
+// ListHelp display usage of List command
+func ListHelp() {
+	fmt.Println(`
+Usage: npmrc list [flags]
+
+Alias: ls
+
+Available flags:
+
+l          Display as list
+h          Display this message`)
 }
