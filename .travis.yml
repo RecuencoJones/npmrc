@@ -9,7 +9,10 @@ install:
 
 script:
 - go install ./...
-- gox -output="bin/{{.OS}}-{{.Arch}}/{{.Dir}}" ./...
+- gox -output="bin/{{.Dir}}_{{.OS}}_{{.Arch}}" ./...
+
+before_deploy:
+- export VERSION=`npmrc version`
 
 deploy:
   provider: releases
@@ -17,5 +20,7 @@ deploy:
   file_glob: true
   file: bin/**/*
   skip_cleanup: true
+  name: npmrc $VERSION
+  body: 'Follow these steps:\n- Download the binary for your distribution\n- Rename it to `npmrc`\n- Make it available in your path\n\nHappy npmrc switching! :)'
   on:
     tags: true
