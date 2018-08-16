@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -29,6 +30,24 @@ func GetProfiles() []string {
 	})
 
 	return profileNames
+}
+
+// AskConfirmation via prompt with given message
+func AskConfirmation(message string) bool {
+	var answer string
+
+	fmt.Printf("%s (y/N): ", message)
+
+	_, err := fmt.Scanln(&answer)
+
+	if err != nil {
+		panic(err)
+	}
+
+	answer = strings.TrimSpace(answer)
+	answer = strings.ToLower(answer)
+
+	return answer == "y" || answer == "yes"
 }
 
 // GetEnv attempts to retrieve an env variable or returns given default value

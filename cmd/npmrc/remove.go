@@ -27,10 +27,6 @@ func RemoveHandler(args []string, options RemoveOptions) {
 		os.Exit(1)
 	}
 
-	if !options.force {
-		// TODO prompt
-	}
-
 	profile := args[0]
 
 	if !ProfileExists(profile) {
@@ -39,6 +35,18 @@ func RemoveHandler(args []string, options RemoveOptions) {
 		}
 
 		os.Exit(0)
+	}
+
+	if !options.force {
+		confirm := AskConfirmation("Are you sure you want to remove profile \"" + profile + "\"?")
+
+		if !confirm {
+			if options.verbose {
+				fmt.Println("Refuted to remove \"" + profile + "\". Nothing to do here.")
+			}
+
+			os.Exit(0)
+		}
 	}
 
 	err := Remove(profile)
