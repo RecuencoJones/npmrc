@@ -15,8 +15,8 @@ go install ./...
 
 ## Installation from releases
 
-- Download the binary for your distribution
-- Rename it to `npmrc`
+- Download the file for your distribution
+- Extract it to get `npmrc`
 - Make it available in your path
 
 Happy `.npmrc` switching!
@@ -43,5 +43,13 @@ version     Display version
 | Env variable | Default value | Description |
 | --- | --- | --- |
 | NPMRC_DIR | `~` | Directory where profiles will be stored |
-| EDITOR | `vim` | Editor to use for creating/editing profiles |
+| EDITOR | `vi` | Editor to use for creating/editing profiles |
 | VIEWER | `cat` | Viewer to use for viewing profiles |
+
+## Profile name rules
+
+- Profile name must not start with `.`
+- Profile name must not contain spaces
+- Profile name must be of at least 1 character length
+
+[Check regex at regexr.com](https://regexr.com/3u5rg)

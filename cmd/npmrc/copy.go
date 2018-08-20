@@ -43,15 +43,29 @@ func CopyHandler(args []string, options CopyOptions) {
 
 // Copy source profile to destination profile
 func Copy(srcProfile, destProfile string) error {
+	var dest string
+
 	// check profile is valid
 	if !ProfileExists(srcProfile) {
 		fmt.Println("Error: Profile \"" + srcProfile + "\" does not exist")
 		os.Exit(1)
 	}
 
+	if destProfile == "." {
+		dir, err := os.Getwd()
+		if err != nil {
+			log.Fatal(err)
+			os.Exit(1)
+		}
+
+		dest = path.Join(dir, NpmrcFile)
+	} else {
+		ValidateProfile(destProfile)
+		dest = path.Join(Dir, NpmrcFile+"."+destProfile)
+	}
+
 	// copy from $npmrc_dir/.npmrc.$srcProfile to $npmrc_dir/.npmrc.$destProfile
 	source := path.Join(Dir, NpmrcFile+"."+srcProfile)
-	dest := path.Join(Dir, NpmrcFile+"."+destProfile)
 
 	return CP(source, dest)
 }
@@ -66,5 +80,9 @@ Alias: cp
 Available flags:
 
 verbose    Display additional output
-h          Display this message`)
+h          Display this message
+
+Details:
+
+If <destProfile> is ".", the selected profile is copied to current working directory.`)
 }

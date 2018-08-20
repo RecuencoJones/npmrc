@@ -18,6 +18,8 @@ type EditOptions struct {
 func EditHandler(args []string, options EditOptions) {
 	profile := args[0]
 
+	ValidateProfile(profile)
+
 	if options.verbose {
 		if !ProfileExists(profile) {
 			fmt.Println("Creating profile \"" + profile + "\"")

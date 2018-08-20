@@ -136,7 +136,7 @@ func main() {
 // Help display usage of npmrc command
 func Help() {
 	fmt.Println(`
-Usage: npmrc <command> [flags]
+Usage: npmrc <command>
 
 Available commands:
 
@@ -147,5 +147,13 @@ edit, ed    Create or update profiles
 copy, cp    Copy profiles
 remove, rm  Remove a profile
 help, h     Display this message
-version     Display version`)
+version     Display version
+
+Profile names:
+
+A profile names must comply with the following:
+
+- Must not start with "."
+- Must not contain spaces
+- Must be of at least 1 character length`)
 }

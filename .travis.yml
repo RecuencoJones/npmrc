@@ -9,16 +9,17 @@ install:
 
 script:
 - go install ./...
-- gox -output="bin/{{.Dir}}_{{.OS}}_{{.Arch}}" ./...
+- gox -output="bin/{{.OS}}_{{.Arch}}/{{.Dir}}" ./...
 
 before_deploy:
 - export VERSION=`npmrc version`
+- for i in bin/*; do tar -zvcf "$i.tar.gz" "$i"; done
 
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   file_glob: true
-  file: bin/**/*
+  file: bin/*.tar.gz
   skip_cleanup: true
   name: npmrc $VERSION
   on:
