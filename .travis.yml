@@ -25,3 +25,6 @@ deploy:
   body: "https://github.com/RecuencoJones/npmrc#install"
   on:
     tags: true
+
+after_deploy:
+- echo "Brew hash: $(shasum -a 256 ./bin/darwin_amd64.tar.gz | awk '{ print $1 }')"
