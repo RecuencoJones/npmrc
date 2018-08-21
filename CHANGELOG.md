@@ -1,3 +1,8 @@
+## 0.1.3
+
+- Added `--local` flag to `use` command
+- Updated readme with brew instructions
+
 ## 0.1.2
 
 - Added profile name validation

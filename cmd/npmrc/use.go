@@ -9,7 +9,8 @@ import (
 
 // UseOptions containing flag values
 type UseOptions struct {
-	help bool
+	local bool
+	help  bool
 }
 
 // UseHandler used to parse args and options
@@ -27,7 +28,7 @@ func UseHandler(args []string, options UseOptions) {
 
 	profile := args[0]
 
-	err := Use(profile)
+	err := Use(profile, options.local)
 
 	if err != nil {
 		log.Fatal(err)
@@ -36,7 +37,9 @@ func UseHandler(args []string, options UseOptions) {
 }
 
 // Use given profile
-func Use(profile string) error {
+func Use(profile string, local bool) error {
+	var dest string
+
 	if !ProfileExists(profile) {
 		fmt.Println("Profile \"" + profile + "\" does not exist")
 		os.Exit(1)
@@ -44,7 +47,12 @@ func Use(profile string) error {
 
 	// copy from $npmrc_dir/.npmrc.$profile to .npmrc
 	source := path.Join(Dir, NpmrcFile+"."+profile)
-	dest := path.Join(Home, NpmrcFile)
+
+	if local {
+		dest = path.Join(Cwd, NpmrcFile)
+	} else {
+		dest = path.Join(Home, NpmrcFile)
+	}
 
 	err := CP(source, dest)
 
@@ -68,5 +76,6 @@ Alias: u
 
 Available flags:
 
+local      Use the profile for current directory
 h          Display this message`)
 }

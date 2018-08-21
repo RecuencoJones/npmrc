@@ -8,6 +8,7 @@ import (
 
 func main() {
 	useCmd := flag.NewFlagSet("use", flag.ExitOnError)
+	useLocalFlag := useCmd.Bool("local", false, "Use the profile for current directory")
 	useHelpFlag := useCmd.Bool("h", false, "Display help")
 
 	viewCmd := flag.NewFlagSet("view", flag.ExitOnError)
@@ -76,7 +77,8 @@ func main() {
 	// Use
 	if useCmd.Parsed() {
 		options := UseOptions{
-			help: *useHelpFlag,
+			local: *useLocalFlag,
+			help:  *useHelpFlag,
 		}
 
 		UseHandler(useCmd.Args(), options)

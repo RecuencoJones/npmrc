@@ -52,13 +52,7 @@ func Copy(srcProfile, destProfile string) error {
 	}
 
 	if destProfile == "." {
-		dir, err := os.Getwd()
-		if err != nil {
-			log.Fatal(err)
-			os.Exit(1)
-		}
-
-		dest = path.Join(dir, NpmrcFile)
+		dest = path.Join(Cwd, NpmrcFile)
 	} else {
 		ValidateProfile(destProfile)
 		dest = path.Join(Dir, NpmrcFile+"."+destProfile)
