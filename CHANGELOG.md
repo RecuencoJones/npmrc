@@ -2,6 +2,7 @@
 
 - Added `--local` flag to `use` command
 - Updated readme with brew instructions
+- Fixed an issue where remaining lines of .npmrc file were not truncated
 
 ## 0.1.2
 

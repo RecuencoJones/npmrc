@@ -68,7 +68,7 @@ func CP(sourcefile, destfile string) error {
 	}
 	defer source.Close()
 
-	dest, err := os.OpenFile(destfile, os.O_RDWR|os.O_CREATE, 0666)
+	dest, err := os.OpenFile(destfile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		log.Fatal(err)
 		os.Exit(1)
