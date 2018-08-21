@@ -4,7 +4,28 @@
 
 A CLI to manage multiple npmrc files
 
-## Installation from source
+## Install
+
+### from brew
+
+```
+brew tap RecuencoJones/tap
+brew install npmrc
+```
+
+Later you can upgrade with
+
+```
+brew upgrade npmrc
+```
+
+### from releases
+
+- Download the file for your distribution
+- Extract it to get `npmrc`
+- Make it available in your path
+
+### from source
 
 ```
 git clone https://github.com/RecuencoJones/npmrc
@@ -13,18 +34,10 @@ go get -t ./...
 go install ./...
 ```
 
-## Installation from releases
-
-- Download the file for your distribution
-- Extract it to get `npmrc`
-- Make it available in your path
-
-Happy `.npmrc` switching!
-
 ## Usage
 
 ```
-npmrc <command> [flags]
+npmrc <command>
 
 Available commands:
 

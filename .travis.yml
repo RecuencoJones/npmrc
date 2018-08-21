@@ -22,5 +22,6 @@ deploy:
   file: bin/*.tar.gz
   skip_cleanup: true
   name: npmrc $VERSION
+  body: "https://github.com/RecuencoJones/npmrc#install"
   on:
     tags: true
