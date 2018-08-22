@@ -45,7 +45,6 @@ func Use(profile string, local bool) error {
 		os.Exit(1)
 	}
 
-	// copy from $npmrc_dir/.npmrc.$profile to .npmrc
 	source := path.Join(Dir, NpmrcFile+"."+profile)
 
 	if local {
@@ -59,8 +58,6 @@ func Use(profile string, local bool) error {
 	if err != nil {
 		return err
 	}
-
-	// TODO set .npmrc_current to $profile
 
 	fmt.Println("Now using profile: " + profile)
 

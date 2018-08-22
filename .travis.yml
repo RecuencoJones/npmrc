@@ -4,16 +4,15 @@ go:
 - "1.10"
 
 install:
-- go get github.com/mitchellh/gox
-- go get -t ./...
+- make setup
 
 script:
-- go install ./...
-- gox -output="bin/{{.OS}}_{{.Arch}}/{{.Dir}}" ./...
+- make build
 
 before_deploy:
+- make install
+- make x-compile
 - export VERSION=`npmrc version`
-- for i in bin/*; do tar -zvcf "$i.tar.gz" "$i"; done
 
 deploy:
   provider: releases

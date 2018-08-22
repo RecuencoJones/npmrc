@@ -6,9 +6,11 @@ import (
 	homedir "github.com/mitchellh/go-homedir"
 )
 
-// NpmrcFile base name
 const (
-	Version   = "0.1.3"
+	// Version of application
+	Version = "0.1.4"
+
+	// NpmrcFile base name
 	NpmrcFile = ".npmrc"
 )
 
