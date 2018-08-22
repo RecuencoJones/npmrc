@@ -26,4 +26,4 @@ deploy:
     tags: true
 
 after_deploy:
-- echo "Brew hash: $(shasum -a 256 ./bin/darwin_amd64.tar.gz | awk '{ print $1 }')"
+- shasum -a 256 ./bin/darwin_amd64.tar.gz
