@@ -31,6 +31,11 @@ func main() {
 	removeForceFlag := removeCmd.Bool("f", false, "Force removal")
 	removeHelpFlag := removeCmd.Bool("h", false, "Display help")
 
+	saveCmd := flag.NewFlagSet("save", flag.ExitOnError)
+	saveVerboseFlag := saveCmd.Bool("verbose", false, "Display additional output")
+	saveForceFlag := saveCmd.Bool("f", false, "Skip prompt")
+	saveHelpFlag := saveCmd.Bool("h", false, "Display help")
+
 	if len(os.Args) < 2 {
 		Help()
 		os.Exit(1)
@@ -63,6 +68,10 @@ func main() {
 		fallthrough
 	case "rm":
 		removeCmd.Parse(args)
+	case "save":
+		fallthrough
+	case "sv":
+		saveCmd.Parse(args)
 	case "help":
 		fallthrough
 	case "h":
@@ -133,6 +142,17 @@ func main() {
 
 		RemoveHandler(removeCmd.Args(), options)
 	}
+
+	// Save
+	if saveCmd.Parsed() {
+		options := SaveOptions{
+			force:   *saveForceFlag,
+			verbose: *saveVerboseFlag,
+			help:    *saveHelpFlag,
+		}
+
+		SaveHandler(saveCmd.Args(), options)
+	}
 }
 
 // Help display usage of npmrc command
@@ -148,6 +168,7 @@ list, ls    List available profiles
 edit, ed    Create or update profiles
 copy, cp    Copy profiles
 remove, rm  Remove a profile
+save, sv    Save current npmrc to given profile name
 help, h     Display this message
 version     Display version
 
